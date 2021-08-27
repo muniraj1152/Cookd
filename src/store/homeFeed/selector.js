@@ -1,0 +1,1 @@
+export const getFeeds = (state) => state.homeFeed.homeFeeds;
