@@ -3,8 +3,8 @@ import { View, Text } from 'react-native';
 
 const ShoppingListPage = () => {
     return (
-        <View>
-            <Text>ShoppingList Page</Text>
+        <View style={{padding: 30}}>
+            <Text>Shopping List Page</Text>
         </View>
     )
 }
