@@ -18,9 +18,9 @@ export default function SpotLight({ navigation, spotLight }) {
         style={{ width: '100%', height: 200, borderRadius: 20 }}
         resizeMode="stretch"
       />
-      <View style={styles.layerText}>
+      {/* <View style={styles.layerText}>
         <Text style={{ borderColor: 'red', textAlign: 'right', paddingTop: 20, paddingRight: 20 }}> 21 Recipies</Text>
-      </View>
+      </View> */}
     </TouchableOpacity>
   );
 

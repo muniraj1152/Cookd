@@ -56,6 +56,8 @@ JDK v8
 
 * Added Redux saga and axios
 
+* Added react-native-video for auto play video functionality
+
 
 # License
 
