@@ -11,7 +11,7 @@ const ListItem = ({ item, onClick }) => {
         <FastImage
           style={styles.roundedImg}
           source={{
-            uri: item.image_url,
+            uri: `${item.image_url}?auto=compress`,
             priority: FastImage.priority.high,
           }}
 

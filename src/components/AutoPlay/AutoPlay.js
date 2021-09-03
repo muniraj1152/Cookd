@@ -32,7 +32,7 @@ export default function AutoPlay({ autoPlay }) {
           onBuffer={() => onBuffer()}
           onError={() => onVideoError()}
           paused={isPaused}
-          poster={autoPlay.vertical_thumbnail_url}
+          poster={`${autoPlay.vertical_thumbnail_url}?auto=compress`}
           posterResizeMode="stretch"
           resizeMode="cover"
           style={{

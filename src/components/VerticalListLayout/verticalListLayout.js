@@ -18,7 +18,7 @@ const ListItem = ({ item }) => {
       <FastImage
         style={styles.itemPhoto}
         source={{
-          uri: item.vertical_thumbnail_url,
+          uri: `${item.vertical_thumbnail_url}?auto=compress`,
           priority: FastImage.priority.high,
         }}
         resizeMode={FastImage.resizeMode.cover}

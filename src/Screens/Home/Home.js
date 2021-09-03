@@ -70,9 +70,9 @@ const Home = ({ navigation }) => {
         getItemCount={getItemCount}
         getItem={getItem}
         initialNumToRender={30}
-        renderItem={({ item }) =>
+        renderItem={({ item, index }) =>
           !error ? (
-            <View key={item.id} >
+            <View key={index} >
               {item.title === Constants.SPOTLIGHT &&
                 <SpotLight navigation={navigation} spotLight={item.value}></SpotLight>
               }
