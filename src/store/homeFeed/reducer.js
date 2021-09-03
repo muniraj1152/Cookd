@@ -3,20 +3,21 @@ import { FETCH_HOME_FEED_SUCCESS, FETCH_HOME_FEED_FAIL, INCREMENT_SUCCESS, FETCH
 
 const initialState = {
     homeWidgetFeeds: [],
-    filterCategoryList: []
+    filterCategoryList: [],
+    error: false
 };
 
 export default (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case FETCH_HOME_FEED_SUCCESS:
-            return {...state, homeWidgetFeeds: action.payload.homeWidgetFeeds}
+            return { ...state, homeWidgetFeeds: action.payload.homeWidgetFeeds, error: false }
         case FETCH_HOME_FEED_FAIL:
-            return {...state, homeWidgetFeeds: []}
+            return { ...state, homeWidgetFeeds: [], error: true }
         case FETCH_FILTER_CATEGORY_LIST_SUCCESS:
-            return {...state, filterCategoryList: action.payload.filterCategoryList}
+            return { ...state, filterCategoryList: action.payload.filterCategoryList }
         case FETCH_FILTER_CATEGORY_LIST_FAIL:
-            return {...state, filterCategoryList: []}
+            return { ...state, filterCategoryList: [] }
         default:
-            return {...state};
+            return { ...state };
     }
 }

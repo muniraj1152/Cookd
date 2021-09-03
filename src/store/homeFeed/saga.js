@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { fetchHomeFeedSuccess, fetchFilterCategoryListSuccess } from './action';
+import { fetchHomeFeedSuccess, fetchFilterCategoryListSuccess, fetchHomeFeedFail } from './action';
 import { FETCH_FILTER_CATEGORY_LIST, FETCH_HOME_FEED } from './actionTypes';
 
 const fetchHomeFeedCollection = () =>
@@ -18,8 +18,12 @@ const fetchCategoryListCollection = () =>
  * To get home widget feed collections (Which contains autoplay, horizontal, vertical list, spotlight, iconList)
  */
 function* fetchHomeFeed() {
-  const response = yield call(fetchHomeFeedCollection);
-  yield put(fetchHomeFeedSuccess({ homeWidgetFeeds: response.data }))
+  try {
+    const response = yield call(fetchHomeFeedCollection);
+    yield put(fetchHomeFeedSuccess({ homeWidgetFeeds: response.data }))
+  } catch (error) {
+    yield put(fetchHomeFeedFail(error))
+  }
 }
 
 function* fetchCategoryList() {

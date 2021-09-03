@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
-import { TouchableOpacity, Image, Text, StyleSheet, View, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableOpacity, Text, StyleSheet, SafeAreaView } from 'react-native';
 import Colors from '../../theme/Color';
 import Video from 'react-native-video';
-import VisibilitySensor from '@svanboxel/visibility-sensor-react-native'
+import constants from '../../utils/constants';
 
 /**
  * To display video component, automtically starts video while focus 
@@ -10,11 +10,8 @@ import VisibilitySensor from '@svanboxel/visibility-sensor-react-native'
  */
 export default function AutoPlay({ autoPlay }) {
 
-  const [isVisible, setIsVisible] = useState(false)
+  const [isPaused, setIsPaused] = useState(true)
 
-  const handleVideoVisibility = visible => {
-    setIsVisible(visible)
-  }
   let reference = null;
 
   const onBuffer = () => {
@@ -26,25 +23,26 @@ export default function AutoPlay({ autoPlay }) {
   }
 
   return (
-    <TouchableOpacity style={styles.container} >
-      <VisibilitySensor onChange={handleVideoVisibility}>
+    <SafeAreaView style={styles.container} >
+      <TouchableOpacity onPress={() => setIsPaused(!isPaused)}>
         <Video source={{ uri: autoPlay.recipe_lite.streaming_url }}
           ref={(ref) => {
             reference = ref
           }}
-
           onBuffer={() => onBuffer()}
           onError={() => onVideoError()}
-          paused={!isVisible}
+          paused={isPaused}
+          poster={autoPlay.vertical_thumbnail_url}
+          posterResizeMode="stretch"
           resizeMode="cover"
           style={{
             height: 200,
           }} />
-      </VisibilitySensor>
+      </TouchableOpacity>
 
       <Text style={styles.title}>{autoPlay.title}</Text>
-      <Text style={styles.subText}>Trending now - 323 cook made it</Text>
-    </TouchableOpacity>
+      <Text style={styles.subText}>{constants.AUTOPLAY_SUBTEXT}</Text>
+    </SafeAreaView>
   );
 }
 

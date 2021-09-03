@@ -10,15 +10,19 @@ import {
   Pressable
 } from 'react-native';
 
+import FastImage from 'react-native-fast-image'
+import constants from '../../utils/constants';
+
 const ListItem = ({ item }) => {
   return (
     <View style={{ margin: 5 }}>
-      <Image
-        source={{
-          uri: item.square_thumbnail_url,
-        }}
+      <FastImage
         style={styles.itemPhoto}
-        resizeMode="cover"
+        source={{
+          uri: item.vertical_thumbnail_url,
+          priority: FastImage.priority.high,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
       />
       <Text style={styles.itemText}>{item.title}</Text>
     </View>
@@ -31,6 +35,7 @@ export default (props) => {
   return (
     <View style={{
       flex: 1,
+      paddingHorizontal: 10
     }}>
       <SafeAreaView style={{ flex: 1 }}>
         <SectionList
@@ -41,9 +46,9 @@ export default (props) => {
             <>
               <View style={styles.sectionHeader} >
                 <Text style={styles.sectionHeaderTitle}>{section.title}</Text>
-                <Pressable onPress={() => navigation.navigate('Snacks during Binge Watch', {})}>
+                <Pressable onPress={() => navigation.navigate(constants.NAVIGATION_HEADER_TITLE, {})}>
                   <View style={{ flexDirection: 'row', textAlign: 'left', fontSize: 15, paddingRight: 10 }}>
-                    <Text style={styles.moreOption}>Explore more</Text>
+                    <Text style={styles.moreOption}>{constants.EXPLORE_MORE}</Text>
                     <Image source={require('../../assets/arrow_left.png')} style={{ width: 20, height: 20 }} />
                   </View>
                 </Pressable>
@@ -84,7 +89,7 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   itemPhoto: {
-    width: 160,
+    width: 150,
     height: 220,
     borderRadius: 10
   },

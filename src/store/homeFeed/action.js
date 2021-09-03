@@ -1,4 +1,4 @@
-import { FETCH_HOME_FEED, FETCH_HOME_FEED_SUCCESS, FETCH_HOME_FEED_FAIL, FETCH_FILTER_CATEGORY_LIST, FETCH_FILTER_CATEGORY_LIST_SUCCESS, FETCH_FILTER_CATEGORY_LIST_FAIL} from './actionTypes';
+import { FETCH_HOME_FEED, FETCH_HOME_FEED_SUCCESS, FETCH_HOME_FEED_FAIL, FETCH_FILTER_CATEGORY_LIST, FETCH_FILTER_CATEGORY_LIST_SUCCESS, FETCH_FILTER_CATEGORY_LIST_FAIL } from './actionTypes';
 
 export const fetchHomeFeed = () => ({
     type: FETCH_HOME_FEED
@@ -9,8 +9,9 @@ export const fetchHomeFeedSuccess = (payload) => ({
     payload
 });
 
-export const fetchHomeFeedFail = () => ({
-    type: FETCH_HOME_FEED_FAIL
+export const fetchHomeFeedFail = (error) => ({
+    type: FETCH_HOME_FEED_FAIL,
+    payload: error
 });
 
 export const fetchFilterCategoryList = () => ({

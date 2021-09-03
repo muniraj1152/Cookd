@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchFilterCategoryList } from '../../store/homeFeed/action';
 import { getCategoryList } from '../../store/homeFeed/selector';
+import FastImage from 'react-native-fast-image'
+import constants from '../../utils/constants';
 
 const ListItem = ({ item }) => {
   return (
@@ -14,8 +16,15 @@ const ListItem = ({ item }) => {
         style={styles.itemPhoto}
         resizeMode="stretch"
       />
+      <FastImage
+        source={{
+          uri: item.square_thumbnail_url,
+          priority: FastImage.priority.high,
+        }}
+        resizeMode={FastImage.resizeMode.stretch}
+      />
       <Text style={styles.itemText}>{item.title}</Text>
-      <Text style={styles.subText}>Cooktime: {item.total_cooking_time} min</Text>
+      <Text style={styles.subText}>{constants.COOK_TIME}: {item.total_cooking_time} {constants.MIN}</Text>
     </View>
   );
 };
@@ -34,7 +43,7 @@ const ListFoodItem = () => {
   return (
     <FlatList
       numColumns={2}
-      columnWrapperStyle={styles.row}
+      columnWrapperStyle={{ justifyContent: 'space-around' }}
       data={categoryList}
       renderItem={({ item }) => <ListItem item={item} />}
       showsHorizontalScrollIndicator={false}
@@ -48,11 +57,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around"
   },
   item: {
-    margin: 10,
+    marginVertical: 10,
   },
   itemPhoto: {
-    height: 150,
-    width: 150,
+    height: 160,
+    width: 160,
     borderRadius: 20
   },
   itemText: {

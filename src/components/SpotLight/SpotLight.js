@@ -7,7 +7,7 @@ import Colors from '../../theme/Color';
  * To display splot light image
  * @param {*} param which contains navigation object and spot light data
  */
-export default function SpotLight({ navigation, spotLight }) {
+export function Spot({ navigation, spotLight }) {
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => navigation.navigate('Snacks during Binge Watch', {})}>
@@ -43,3 +43,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
   }
 });
+
+const spotLightsPropsAreEqual = (prev, current) => {
+  return prev.spotLight.id === current.spotLight.id;
+}
+
+export const SpotLight = React.memo(Spot, spotLightsPropsAreEqual);
+

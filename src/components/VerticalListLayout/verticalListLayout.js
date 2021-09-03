@@ -9,22 +9,26 @@ import {
   FlatList,
 } from 'react-native';
 
+import FastImage from 'react-native-fast-image'
+import constants from '../../utils/constants';
+
 const ListItem = ({ item }) => {
   return (
     <View style={styles.item}>
-      <Image
-        source={{
-          uri: item.square_thumbnail_url,
-        }}
+      <FastImage
         style={styles.itemPhoto}
-        resizeMode="cover"
+        source={{
+          uri: item.vertical_thumbnail_url,
+          priority: FastImage.priority.high,
+        }}
+        resizeMode={FastImage.resizeMode.cover}
       />
       <View style={{
         justifyContent: 'center', paddingLeft: 10,
         flex: 1
       }}>
         <Text style={{ fontSize: 14, fontWeight: '500' }}>{item.title}</Text>
-        <Text style={{ fontSize: 10, color: 'grey' }}>Cook time: {item.total_cooking_time} Min</Text>
+        <Text style={{ fontSize: 10, color: 'grey' }}>{constants.COOK_TIME}: {item.total_cooking_time} {constants.MIN}</Text>
       </View>
     </View>
   );
@@ -46,23 +50,18 @@ export default ({ verticalList, navigation }) => {
             <>
               <View>
                 <Text style={styles.sectionHeader}>{section.title}</Text>
-                <Text style={styles.viewAll} onPress={() => navigation.navigate('Snacks during Binge Watch', {})}>View All</Text>
-                {section.horizontal ? (
-                  <FlatList
-                    horizontal
-                    data={section.data}
-                    renderItem={({ item }) => <ListItem item={item} />}
-                    showsHorizontalScrollIndicator={false}
-                  />
-                ) : null}
+                <Text style={styles.viewAll} onPress={() => navigation.navigate(constants.NAVIGATION_HEADER_TITLE, {})}>{constants.VIEW_ALL}</Text>
+                <FlatList
+                  horizontal={true}
+                  data={section.data}
+                  renderItem={({ item }) => <ListItem item={item} />}
+                  showsHorizontalScrollIndicator={false}
+                />
               </View>
             </>
           )}
           renderItem={({ item, section }) => {
-            if (section.horizontal) {
-              return null;
-            }
-            return <ListItem item={item} />;
+            return null;
           }}
         />
       </SafeAreaView>
