@@ -3,7 +3,6 @@ import {
   Text,
   View,
   SafeAreaView,
-  ScrollView,
   ToastAndroid,
   VirtualizedList
 } from 'react-native';

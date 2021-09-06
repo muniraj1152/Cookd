@@ -1,47 +1,64 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, StyleSheet, SafeAreaView } from 'react-native';
-import Colors from '../../theme/Color';
+import { SafeAreaView, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import Video from 'react-native-video';
-import constants from '../../utils/constants';
+import Colors from '../../theme/Color';
+
+let reference = null;
+
+const onBuffer = () => {
+  console.log('video buffered---');
+}
+
+const onVideoError = () => {
+  console.log('Error while playing video');
+}
 
 /**
  * To display video component, automtically starts video while focus 
  * @param {*} param which contains autoPlay video url and title 
  */
 export default function AutoPlay({ autoPlay }) {
+  const data = [];
+  data.push(autoPlay);
+  const [isPaused, setIsPaused] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
 
-  const [isPaused, setIsPaused] = useState(true)
+  const onViewRef = React.useRef((viewableItems) => {
+    if (viewableItems.viewableItems && viewableItems.viewableItems.length > 0) {
+      setIsPaused(false);
+    } else {
+      setIsPaused(true);
+    }
+  });
 
-  let reference = null;
-
-  const onBuffer = () => {
-    console.log('video buffered---');
-  }
-
-  const onVideoError = () => {
-    console.log('Error while playing video');
-  }
+  const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
 
   return (
-    <SafeAreaView style={styles.container} >
-      <TouchableOpacity onPress={() => setIsPaused(!isPaused)}>
-        <Video source={{ uri: autoPlay.recipe_lite.streaming_url }}
-          ref={(ref) => {
-            reference = ref
-          }}
-          onBuffer={() => onBuffer()}
-          onError={() => onVideoError()}
-          paused={isPaused}
-          poster={`${autoPlay.vertical_thumbnail_url}?auto=compress`}
-          posterResizeMode="stretch"
-          resizeMode="cover"
-          style={{
-            height: 200,
-          }} />
-      </TouchableOpacity>
-
-      <Text style={styles.title}>{autoPlay.title}</Text>
-      <Text style={styles.subText}>{constants.AUTOPLAY_SUBTEXT}</Text>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={data}
+        keyExtractor={(item, index) => index}
+        onViewableItemsChanged={onViewRef.current}
+        viewabilityConfig={viewConfigRef.current}
+        renderItem={({ item }) =>
+          <TouchableOpacity onPress={() => setIsMuted(!isMuted)}>
+            <Video source={{ uri: item.recipe_lite.streaming_url }}
+              ref={(ref) => {
+                reference = ref
+              }}
+              onBuffer={() => onBuffer()}
+              onError={() => onVideoError()}
+              paused={isPaused}
+              muted={isMuted}
+              poster={`${item.vertical_thumbnail_url}?auto=compress`}
+              posterResizeMode="stretch"
+              resizeMode="cover"
+              style={{
+                height: 200,
+              }} />
+          </TouchableOpacity>
+        }
+      />
     </SafeAreaView>
   );
 }
